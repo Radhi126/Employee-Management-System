@@ -1,21 +1,28 @@
 # Employee Management System
 
-A web-based Employee Management System developed using Flask, MySQL, HTML, CSS and JavaScript.
+## Project Overview
+
+The Employee Management System is a web application developed using Flask and MySQL to simplify employee and department management. It provides a clean interface for administrators to perform CRUD operations, generate reports, and export employee records.
+
+---
 
 ## Features
 
-- Admin Login
-- Employee Management (CRUD)
-- Department Management (CRUD)
+- Admin Login Authentication
+- Employee Management (Add, Update, Delete)
+- Department Management
+- Dashboard with Summary Cards
 - Search Employees
 - Search Departments
+- Salary Reports
 - Export Employee Data to Excel
-- Reports Dashboard
-- Responsive User Interface
 - Duplicate Email Validation
 - Duplicate Department Validation
+- Responsive User Interface
 
-## Technologies Used
+---
+
+## Technology Stack
 
 - Python
 - Flask
@@ -26,9 +33,11 @@ A web-based Employee Management System developed using Flask, MySQL, HTML, CSS a
 - Pandas
 - OpenPyXL
 
+---
+
 ## Project Structure
 
-```
+```text
 employee-management-system/
 │
 ├── app.py
@@ -37,29 +46,26 @@ employee-management-system/
 ├── employee_management.sql
 ├── templates/
 ├── static/
+└── README.md
 ```
+
+---
 
 ## Installation
 
-Clone the repository
+1. Clone the repository
 
 ```bash
-git clone https://github.com/USERNAME/employee-management-system.git
+git clone https://github.com/YOUR_USERNAME/employee-management-system.git
 ```
 
-Go inside the project
-
-```bash
-cd employee-management-system
-```
-
-Install dependencies
+2. Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Import
+3. Import
 
 ```
 employee_management.sql
@@ -67,23 +73,19 @@ employee_management.sql
 
 into MySQL.
 
-Update database credentials inside
+4. Update database credentials in
 
 ```
 db.py
 ```
 
-Run
+5. Run
 
 ```bash
 python app.py
 ```
 
-Open
-
-```
-http://127.0.0.1:5000
-```
+---
 
 ## Default Login
 
@@ -99,13 +101,17 @@ Password
 EMS@2026
 ```
 
-## Future Improvements
+---
+
+## Future Enhancements
 
 - Employee Photo Upload
 - Attendance Management
 - Payroll Module
-- Role-Based Login
+- Role-Based Authentication
 - Email Notifications
 
+---
+## License
 
-Your Name
+This project is developed for educational and internship purposes.
