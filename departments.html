@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}Departments{% endblock %}
+
+{% block content %}
+
+<div class="page-title">
+    <h2>Department Management</h2>
+    <p>Manage company departments efficiently.</p>
+</div>
+
+<div class="employee-form">
+
+    <h3 id="deptFormTitle">Add / Update Department</h3>
+
+    <p class="form-subtitle">
+        Enter department details below.
+    </p>
+
+    <form action="/save_department" method="POST">
+
+        <input type="hidden" name="dept_id" id="dept_id">
+
+        <div class="form-group">
+
+            <label>Department Name</label>
+
+            <input
+                type="text"
+                name="dept_name"
+                id="dept_name"
+                placeholder="Enter department name"
+                required>
+
+        </div>
+
+        <button
+            type="submit"
+            class="save-btn"
+            id="deptSubmitBtn">
+
+            💾 Save Department
+
+        </button>
+
+    </form>
+
+</div>
+
+<div class="employee-table">
+
+    <div class="table-header">
+
+        <div>
+
+            <h3>Department List</h3>
+
+            <p class="table-count">
+                Total Departments : {{ departments|length }}
+            </p>
+
+        </div>
+
+        <div class="table-actions">
+
+            <input
+                type="text"
+                id="departmentSearch"
+                placeholder="🔍 Search Department..."
+                onkeyup="searchDepartment()">
+
+        </div>
+
+    </div>
+
+    <table id="departmentTable">
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Department Name</th>
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% if departments %}
+
+            {% for dept in departments %}
+
+            <tr>
+
+                <td>{{ dept.dept_id }}</td>
+
+                <td>{{ dept.dept_name }}</td>
+
+                <td>
+
+                    <button
+                        class="edit-btn"
+                        onclick="editDepartment(
+                        '{{ dept.dept_id }}',
+                        '{{ dept.dept_name }}'
+                        )">
+
+                        ✏ Edit
+
+                    </button>
+
+                    <a
+                        href="/delete_department/{{ dept.dept_id }}"
+                        class="delete-btn"
+                        onclick="return confirm('Delete this department?');">
+
+                        🗑 Delete
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        {% else %}
+
+            <tr>
+
+                <td colspan="3">
+                    No departments available.
+                </td>
+
+            </tr>
+
+        {% endif %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

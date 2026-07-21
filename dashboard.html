@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="page-title">
+    <h2>Dashboard</h2>
+    <p>Overview of employees, departments and salary details.</p>
+</div>
+
+<!-- Dashboard Cards -->
+
+<div class="cards">
+
+    <div class="card">
+        <div class="card-icon">👥</div>
+        <h3>Total Employees</h3>
+        <h1>{{ total_employees }}</h1>
+    </div>
+
+    <div class="card">
+        <div class="card-icon">🏢</div>
+        <h3>Total Departments</h3>
+        <h1>{{ total_departments }}</h1>
+    </div>
+
+    <div class="card">
+        <div class="card-icon">💰</div>
+        <h3>Total Salary</h3>
+        <h1>₹ {{ "{:,.0f}".format(total_salary) }}</h1>
+    </div>
+
+</div>
+
+<!-- Recent Employees -->
+
+<div class="employee-table">
+
+    <div class="table-header">
+
+        <div>
+            <h3>Recent Employees</h3>
+            <p class="table-count">
+                Showing latest {{ employees|length }} employees
+            </p>
+        </div>
+
+        <a href="/employees" class="export-btn">
+            View All Employees
+        </a>
+
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Designation</th>
+                <th>Salary</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% if employees %}
+
+                {% for emp in employees[:5] %}
+
+                <tr>
+
+                    <td>{{ emp.emp_id }}</td>
+
+                    <td>{{ emp.emp_name }}</td>
+
+                    <td>{{ emp.department }}</td>
+
+                    <td>{{ emp.designation }}</td>
+
+                    <td>₹ {{ "{:,.0f}".format(emp.salary) }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            {% else %}
+
+                <tr>
+
+                    <td colspan="5">
+                        No employees available.
+                    </td>
+
+                </tr>
+
+            {% endif %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

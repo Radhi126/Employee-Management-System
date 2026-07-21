@@ -1,0 +1,304 @@
+{% extends 'base.html' %}
+
+{% block title %}Employees{% endblock %}
+
+{% block content %}
+
+<!-- =========================
+PAGE TITLE
+========================= -->
+
+<div class="page-title">
+    <h2>Employee Management</h2>
+    <p>Manage employee records efficiently from one place.</p>
+</div>
+
+<!-- =========================
+EMPLOYEE FORM
+========================= -->
+
+<div class="employee-form">
+
+    <h3 id="formTitle">Add / Update Employee</h3>
+
+    <p class="form-subtitle">
+        Fill in the employee information below.
+    </p>
+
+    <form action="/save_employee" method="POST">
+
+        <input type="hidden" name="emp_id" id="emp_id">
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label>Employee Name</label>
+                <input
+                type="text"
+                name="emp_name"
+                id="emp_name"
+                required
+                minlength="3"
+                maxlength="50"
+                placeholder="Enter employee name">
+            </div>
+
+            <div class="form-group">
+                <label>Age</label>
+                <input
+                    type="number"
+                    name="age"
+                    id="age"
+                    min="18"
+                    max="60"
+                    placeholder="Enter age"
+                    required>
+            </div>
+
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label>Gender</label>
+
+                <select name="gender" id="gender" required>
+                    <option value="">Select Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Department</label>
+
+                <select name="department" id="department" required>
+
+                    <option value="">Select Department</option>
+
+                    {% for dept in departments %}
+                        <option value="{{ dept.dept_name }}">
+                            {{ dept.dept_name }}
+                        </option>
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group">
+                <label>Designation</label>
+
+                <input
+                    type="text"
+                    name="designation"
+                    id="designation"
+                    placeholder="Enter designation">
+            </div>
+
+            <div class="form-group">
+
+                <label>Salary</label>
+
+                <input
+                    type="number"
+                    name="salary"
+                    id="salary"
+                    min="0"
+                    placeholder="Enter salary">
+
+            </div>
+
+        </div>
+
+        <div class="form-row">
+
+            <div class="form-group">
+
+                <label>Phone</label>
+
+                <input
+                    type="text"
+                    name="phone"
+                    id="phone"
+                    pattern="[0-9]{10}"
+                    maxlength="10"
+                    placeholder="Enter phone number">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Enter email address">
+
+            </div>
+
+        </div>
+
+        <div class="form-group">
+
+            <label>Address</label>
+
+            <textarea
+                name="address"
+                id="address"
+                rows="3"
+                placeholder="Enter employee address"></textarea>
+
+        </div>
+
+        <button
+            type="submit"
+            class="save-btn"
+            id="submitBtn">
+
+            💾 Save Employee
+
+        </button>
+
+        <button type="button" class="cancel-btn" onclick="resetEmployeeForm()">Clear</button>
+
+    </form>
+
+</div>
+
+<!-- =========================
+EMPLOYEE TABLE
+========================= -->
+
+<div class="employee-table">
+
+    <div class="table-header">
+
+        <div>
+
+            <h3>Employee List</h3>
+
+            <p class="table-count">
+                Total Employees : {{ employees|length }}
+            </p>
+
+        </div>
+
+        <div class="table-actions">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="🔍 Search by name, department or phone..."
+                onkeyup="searchEmployee()">
+
+            <a href="/export" class="export-btn">
+                Export Excel
+            </a>
+
+        </div>
+
+    </div>
+
+    <table id="employeeTable">
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Designation</th>
+                <th>Salary</th>
+                <th>Phone</th>
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% if employees %}
+
+            {% for emp in employees %}
+
+            <tr>
+
+                <td>{{ emp.emp_id }}</td>
+
+                <td>{{ emp.emp_name }}</td>
+
+                <td>{{ emp.department }}</td>
+
+                <td>{{ emp.designation }}</td>
+
+                <td>₹ {{ "{:,.0f}".format(emp.salary) }}</td>
+
+                <td>{{ emp.phone }}</td>
+
+                <td>
+
+                    <button
+                        class="edit-btn"
+                        onclick="editEmployee(
+                        '{{ emp.emp_id }}',
+                        '{{ emp.emp_name }}',
+                        '{{ emp.age }}',
+                        '{{ emp.gender }}',
+                        '{{ emp.department }}',
+                        '{{ emp.designation }}',
+                        '{{ emp.salary }}',
+                        '{{ emp.phone }}',
+                        '{{ emp.email }}',
+                        `{{ emp.address }}`
+                        )">
+
+                        ✏ Edit
+
+                    </button>
+
+                    <a
+                        href="/delete_employee/{{ emp.emp_id }}"
+                        class="delete-btn"
+                        onclick="return confirm('Delete this employee?');">
+
+                        🗑 Delete
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        {% else %}
+
+            <tr>
+
+                <td colspan="7">
+                    No employee records found.
+                </td>
+
+            </tr>
+
+        {% endif %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}
