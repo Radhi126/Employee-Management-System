@@ -107,6 +107,5 @@ EMS@2026
 - Role-Based Login
 - Email Notifications
 
-## Developed By
 
 Your Name
